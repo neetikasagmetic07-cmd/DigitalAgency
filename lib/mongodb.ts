@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error("Please add MONGODB_URI to .env.local");
+  throw new Error("Please define MONGODB_URI in .env.local");
 }
 
 const globalForMongoose = globalThis as typeof globalThis & {
@@ -27,8 +27,8 @@ export default async function connectDB() {
   }
 
   if (!cache.promise) {
-    cache.promise = mongoose.connect(MONGODB_URI);
-  }
+  cache.promise = mongoose.connect(MONGODB_URI!);
+}
 
   try {
     cache.conn = await cache.promise;
